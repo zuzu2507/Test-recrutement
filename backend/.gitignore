@@ -1,0 +1,14 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.env
+*.log
+
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Config locale contenant les identifiants MySQL - jamais commitee
+src/main/resources/application-local.yml

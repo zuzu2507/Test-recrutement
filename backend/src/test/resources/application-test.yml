@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:taskmanager;DB_CLOSE_DELAY=-1;MODE=MySQL
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+app:
+  jwt:
+    secret: secret-de-test-uniquement-32-caracteres-minimum-ok
+    expiration-ms: 3600000
+  cors:
+    allowed-origins: http://localhost:5173

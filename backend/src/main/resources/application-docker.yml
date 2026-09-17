@@ -1,0 +1,7 @@
+# Profil pointant sur la base MySQL de docker-compose.yml (port 3307).
+#   mvn spring-boot:run -Dspring-boot.run.profiles=docker
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/taskmanager?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: taskuser
+    password: taskpassword
