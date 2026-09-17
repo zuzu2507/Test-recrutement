@@ -146,6 +146,80 @@ class TaskApiIntegrationTest {
     }
 
     @Test
+    void refuse_de_faire_reculer_le_statut_d_une_tache() throws Exception {
+        String created = mockMvc.perform(post("/api/tasks")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                new TaskRequest("Progression", null, TaskStatus.DONE))))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        long id = objectMapper.readTree(created).get("id").asLong();
+
+        // DONE -> IN_PROGRESS et DONE -> TODO sont des retours en arriere.
+        for (TaskStatus backwards : new TaskStatus[] {TaskStatus.IN_PROGRESS, TaskStatus.TODO}) {
+            mockMvc.perform(put("/api/tasks/" + id)
+                            .header("Authorization", "Bearer " + token)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(
+                                    new TaskRequest("Progression", null, backwards))))
+                    .andExpect(status().isConflict());
+        }
+
+        // La tache est restee terminee.
+        mockMvc.perform(get("/api/tasks/" + id).header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("DONE"));
+    }
+
+    @Test
+    void autorise_la_progression_du_statut_vers_l_avant() throws Exception {
+        String created = mockMvc.perform(post("/api/tasks")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                new TaskRequest("Avance", null, TaskStatus.TODO))))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        long id = objectMapper.readTree(created).get("id").asLong();
+
+        for (TaskStatus forward : new TaskStatus[] {TaskStatus.IN_PROGRESS, TaskStatus.DONE}) {
+            mockMvc.perform(put("/api/tasks/" + id)
+                            .header("Authorization", "Bearer " + token)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(
+                                    new TaskRequest("Avance", null, forward))))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.status").value(forward.name()));
+        }
+    }
+
+    @Test
+    void laisse_modifier_le_titre_d_une_tache_terminee_sans_changer_son_statut() throws Exception {
+        String created = mockMvc.perform(post("/api/tasks")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                new TaskRequest("Titre initial", null, TaskStatus.DONE))))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        long id = objectMapper.readTree(created).get("id").asLong();
+
+        // Renvoyer le meme statut ne doit pas etre pris pour un retour en arriere.
+        mockMvc.perform(put("/api/tasks/" + id)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                new TaskRequest("Titre corrige", "Ajout", TaskStatus.DONE))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Titre corrige"))
+                .andExpect(jsonPath("$.status").value("DONE"));
+    }
+
+    @Test
     void ne_laisse_pas_un_utilisateur_voir_les_taches_d_un_autre() throws Exception {
         String created = mockMvc.perform(post("/api/tasks")
                         .header("Authorization", "Bearer " + token)

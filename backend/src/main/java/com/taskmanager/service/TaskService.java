@@ -5,6 +5,7 @@ import com.taskmanager.dto.TaskResponse;
 import com.taskmanager.entity.Task;
 import com.taskmanager.entity.TaskStatus;
 import com.taskmanager.entity.User;
+import com.taskmanager.exception.InvalidStatusTransitionException;
 import com.taskmanager.exception.NotFoundException;
 import com.taskmanager.repository.TaskRepository;
 import com.taskmanager.repository.UserRepository;
@@ -56,7 +57,12 @@ public class TaskService {
 
         task.setTitle(request.title().trim());
         task.setDescription(request.description());
-        if (request.status() != null) {
+
+        if (request.status() != null && request.status() != task.getStatus()) {
+            // Progression a sens unique : refuse tout retour en arriere.
+            if (!task.getStatus().canMoveTo(request.status())) {
+                throw new InvalidStatusTransitionException(task.getStatus(), request.status());
+            }
             task.setStatus(request.status());
         }
 

@@ -53,6 +53,16 @@ public class GlobalExceptionHandler {
                 request.getRequestURI()));
     }
 
+    @ExceptionHandler(InvalidStatusTransitionException.class)
+    public ResponseEntity<ApiError> handleInvalidTransition(InvalidStatusTransitionException ex,
+                                                            HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ApiError.of(
+                HttpStatus.CONFLICT.value(),
+                "Conflict",
+                ex.getMessage(),
+                request.getRequestURI()));
+    }
+
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiError> handleNotFound(NotFoundException ex,
                                                    HttpServletRequest request) {

@@ -87,6 +87,20 @@ Le token se transmet via l'en-tête `Authorization: Bearer <token>`.
 
 Statuts possibles d'une tâche : `TODO`, `IN_PROGRESS`, `DONE`.
 
+### Progression du statut
+
+Le cycle de vie est **à sens unique** : `TODO → IN_PROGRESS → DONE`. Un saut vers
+l'avant est permis (une tâche peut être terminée directement), mais tout retour
+en arrière est refusé par un `409 Conflict`.
+
+```
+PUT /api/tasks/{id}  avec status=TODO sur une tâche DONE
+→ 409  "Le statut ne peut pas revenir en arriere : DONE -> TODO"
+```
+
+La règle est portée par l'enum `TaskStatus` et appliquée dans `TaskService`,
+donc côté serveur : l'interface la reflète, mais ne peut pas la contourner.
+
 ### Exemple
 
 ```bash
