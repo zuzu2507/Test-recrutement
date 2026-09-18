@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { KeyRound, LogOut, Mail, ShieldCheck, User as UserIcon } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { useAuth } from '@/hooks/useAuth'
 
 export function SettingsPage() {
   const { user, logout } = useAuth()
+  const [confirmLogout, setConfirmLogout] = useState(false)
 
   const rows = [
     { icon: UserIcon, label: 'Nom complet', value: user?.name ?? '-' },
@@ -60,11 +63,25 @@ export function SettingsPage() {
             Le jeton sera efface de ce navigateur.
           </p>
         </div>
-        <Button variant="secondary" size="compact" onClick={logout}>
+        <Button variant="secondary" size="compact" onClick={() => setConfirmLogout(true)}>
           <LogOut className="size-4" />
           Se deconnecter
         </Button>
       </section>
+
+      <ConfirmDialog
+        open={confirmLogout}
+        title="Deconnexion"
+        description="Voulez-vous vous deconnecter ?"
+        confirmLabel="Se deconnecter"
+        icon={
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-recessed">
+            <LogOut className="size-[18px] text-ink-muted" />
+          </span>
+        }
+        onConfirm={logout}
+        onClose={() => setConfirmLogout(false)}
+      />
     </div>
   )
 }

@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { LogOut, Settings, SquareCheck } from 'lucide-react'
 import { Logo } from './Logo'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/cn'
 
@@ -11,6 +13,7 @@ const NAV_ITEMS = [
 
 export function Sidebar() {
   const { user, logout } = useAuth()
+  const [confirmLogout, setConfirmLogout] = useState(false)
 
   // Initiales en repli : l'API ne fournit pas de photo de profil.
   const initials = (user?.name ?? '?')
@@ -21,6 +24,7 @@ export function Sidebar() {
     .toUpperCase()
 
   return (
+    <>
     <aside className="flex w-[260px] shrink-0 flex-col border-r border-border-hairline bg-surface">
       <div className="px-5 py-5">
         <Logo />
@@ -56,7 +60,7 @@ export function Sidebar() {
         </div>
         <button
           type="button"
-          onClick={logout}
+          onClick={() => setConfirmLogout(true)}
           className="rounded-control p-1.5 text-ink-disabled transition-colors hover:bg-recessed hover:text-danger"
           aria-label="Se deconnecter"
           title="Se deconnecter"
@@ -65,5 +69,20 @@ export function Sidebar() {
         </button>
       </div>
     </aside>
+
+    <ConfirmDialog
+      open={confirmLogout}
+      title="Deconnexion"
+      description="Voulez-vous vous deconnecter ?"
+      confirmLabel="Se deconnecter"
+      icon={
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-recessed">
+          <LogOut className="size-[18px] text-ink-muted" />
+        </span>
+      }
+      onConfirm={logout}
+      onClose={() => setConfirmLogout(false)}
+    />
+    </>
   )
 }
