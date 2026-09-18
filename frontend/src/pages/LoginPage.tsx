@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { ArrowRight, Lock, Mail, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Lock, Mail } from 'lucide-react'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -84,11 +84,6 @@ export function LoginPage() {
           {!submitting && <ArrowRight className="size-4" />}
         </Button>
       </form>
-
-      <p className="mt-6 flex items-center justify-center gap-1.5 rounded-control bg-recessed px-3 py-2.5 text-[12px] text-ink-muted">
-        <ShieldCheck className="size-3.5" />
-        Mots de passe haches en BCrypt, session par jeton JWT
-      </p>
 
       <p className="mt-6 text-center text-sm text-ink-muted">
         Pas encore de compte ?{' '}

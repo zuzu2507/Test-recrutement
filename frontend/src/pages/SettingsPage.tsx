@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { KeyRound, LogOut, Mail, ShieldCheck, User as UserIcon } from 'lucide-react'
+import { KeyRound, LogOut, Mail, User as UserIcon } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { useAuth } from '@/hooks/useAuth'
@@ -46,22 +46,9 @@ export function SettingsPage() {
         </dl>
       </section>
 
-      <section className="rounded-card border border-border-hairline bg-surface p-5 shadow-level1">
-        <h2 className="text-[13px] font-semibold text-ink">Securite</h2>
-        <p className="mt-2 flex items-start gap-2 text-[13px] leading-6 text-ink-muted">
-          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-done-fg" />
-          Votre mot de passe est stocke sous forme de hash BCrypt et n'est jamais
-          conservé en clair. Votre session repose sur un jeton JWT valable 24 heures,
-          conserve dans le navigateur et renvoye a chaque appel de l'API.
-        </p>
-      </section>
-
       <section className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-border-hairline bg-surface p-5 shadow-level1">
         <div>
           <h2 className="text-[13px] font-semibold text-ink">Deconnexion</h2>
-          <p className="mt-1 text-[13px] text-ink-muted">
-            Le jeton sera efface de ce navigateur.
-          </p>
         </div>
         <Button variant="secondary" size="compact" onClick={() => setConfirmLogout(true)}>
           <LogOut className="size-4" />

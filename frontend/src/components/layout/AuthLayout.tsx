@@ -27,19 +27,20 @@ export function AuthLayout({ children }: { children: ReactNode }) {
         <div className="relative max-w-md">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.03em] text-white">
             <Zap className="size-3.5" />
-            Execution intentionnelle
+            Web et mobile synchronisés
           </span>
           <h1 className="mt-6 font-display text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-white">
-            Clarte, autorite tranquille, elan.
+            Moins de bruit.
+            Plus d'avancement.
           </h1>
           <p className="mt-4 text-[15px] leading-6 text-white/75">
-            Organisez vos priorites quotidiennes dans un espace de travail unique,
-            synchronise entre le web et le mobile.
+            Une seule liste de tâches, la même sur tous vos appareils.
+            Créez, suivez, terminez sans jamais perdre le fil.
           </p>
         </div>
 
         <p className="relative text-[12px] text-white/50">
-          TaskFlow — gestionnaire de taches haute densite.
+          TaskFlow — vos tâches, du navigateur au mobile.
         </p>
       </div>
 

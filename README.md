@@ -4,19 +4,22 @@ Application de gestion de tâches en trois parties : une **API REST Java Spring 
 un **frontend web React** et une **application mobile Flutter**, toutes trois branchées
 sur la même base de données et le même système d'authentification.
 
-Réalisé dans le cadre du test de recrutement décrit dans `TEST DE RECRUTEMENT.pdf`.
 
 ---
 
 ## Aperçu
 
-| Connexion | Liste des tâches |
+| Connexion | Inscription |
 |---|---|
-| ![Écran de connexion](docs/captures/01-connexion.png) | ![Liste des tâches](docs/captures/02-liste-taches.png) |
+| ![Écran de connexion](docs/captures/01-connexion.png) | ![Inscription](docs/captures/02-inscription.png) |
 
-| Détail d'une tâche | Édition |
+| Liste des tâches | Détail d'une tâche |
 |---|---|
-| ![Détail d'une tâche](docs/captures/03-detail-tache.png) | ![Édition d'une tâche](docs/captures/04-edition-tache.png) |
+| ![Liste des tâches](docs/captures/03-liste-taches.png) | ![Détail d'une tâche](docs/captures/04-detail-tache.png) |
+
+| Edition d'une tâche | Paramètres |
+|---|---|
+| ![Edition d'une tâche](docs/captures/05-edition-tache.png) | ![Paramètres](docs/captures/06-parametre.png) |
 
 ---
 
@@ -47,8 +50,7 @@ Réalisé dans le cadre du test de recrutement décrit dans `TEST DE RECRUTEMENT
 ├── backend/     API REST Spring Boot
 ├── frontend/    Interface web React
 ├── mobile/      Application Flutter
-├── docs/        Captures d'écran
-└── DESIGN.md    Design system partagé par le web et le mobile
+└── docs/        Captures d'écran
 ```
 
 ---
@@ -302,8 +304,8 @@ pas affichés plutôt que simulés.
 
 ### Cohérence visuelle
 
-`DESIGN.md` définit un design system complet : palette, échelles typographiques,
-rayons, quatre niveaux d'élévation, spécifications de composants.
+Le web et le mobile suivent un design system commun : palette, échelles
+typographiques, rayons, quatre niveaux d'élévation, spécifications de composants.
 
 Ses tokens sont déclarés **une seule fois par plateforme** — dans `@theme` de
 Tailwind côté web, dans `lib/core/design.dart` côté mobile. Conséquence
@@ -387,8 +389,4 @@ données réelles derrière.
 **L'interface est rédigée sans accents.** Un détail de forme, corrigeable d'un
 seul passage, qui n'affecte pas le fonctionnement.
 
----
 
-## Auteur
-
-**Zuber Ndengue** — test de recrutement, septembre 2026.
