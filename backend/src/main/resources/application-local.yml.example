@@ -1,0 +1,8 @@
+# Copier ce fichier en application-local.yml (git-ignore) et renseigner le mot de passe.
+# Puis lancer avec le profil "local" :
+#   mvn spring-boot:run -Dspring-boot.run.profiles=local
+# ou, dans IntelliJ : Run > Edit Configurations > Active profiles = local
+spring:
+  datasource:
+    username: root
+    password: VOTRE_MOT_DE_PASSE_MYSQL

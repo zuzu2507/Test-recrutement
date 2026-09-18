@@ -1,0 +1,41 @@
+# Base MySQL de developpement, isolee de l'instance MySQL native de la machine.
+# Port 3307 cote hote pour ne pas entrer en conflit avec le service MYSQL80 (3306).
+#   docker compose up -d
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: taskmanager-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: taskmanager
+      MYSQL_USER: taskuser
+      MYSQL_PASSWORD: taskpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Interface web de consultation de la base, sur http://localhost:8081
+  # Ne demarre pas par defaut : docker compose --profile tools up -d
+  adminer:
+    image: adminer:5
+    container_name: taskmanager-adminer
+    restart: unless-stopped
+    profiles: ["tools"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DESIGN: dracula
+    ports:
+      - "8081:8080"
+
+volumes:
+  mysql-data:
