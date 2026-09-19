@@ -30,7 +30,7 @@ public class AuthService {
         String email = request.email().trim().toLowerCase();
 
         if (userRepository.existsByEmailIgnoreCase(email)) {
-            throw new EmailAlreadyUsedException("Un compte existe deja avec cet email");
+            throw new EmailAlreadyUsedException("Un compte existe déjà avec cet email");
         }
 
         User user = User.builder()

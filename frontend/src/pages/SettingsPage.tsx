@@ -22,7 +22,7 @@ export function SettingsPage() {
           Compte
         </p>
         <h1 className="mt-1.5 font-display text-[32px] font-bold leading-10 tracking-[-0.02em] text-ink">
-          Parametres
+          Paramètres
         </h1>
         <p className="mt-1 text-sm text-ink-muted">
           Informations de votre compte et gestion de la session.
@@ -48,19 +48,19 @@ export function SettingsPage() {
 
       <section className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-border-hairline bg-surface p-5 shadow-level1">
         <div>
-          <h2 className="text-[13px] font-semibold text-ink">Deconnexion</h2>
+          <h2 className="text-[13px] font-semibold text-ink">Déconnexion</h2>
         </div>
         <Button variant="secondary" size="compact" onClick={() => setConfirmLogout(true)}>
           <LogOut className="size-4" />
-          Se deconnecter
+          Se déconnecter
         </Button>
       </section>
 
       <ConfirmDialog
         open={confirmLogout}
-        title="Deconnexion"
-        description="Voulez-vous vous deconnecter ?"
-        confirmLabel="Se deconnecter"
+        title="Déconnexion"
+        description="Voulez-vous vous déconnecter ?"
+        confirmLabel="Se déconnecter"
         icon={
           <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-recessed">
             <LogOut className="size-[18px] text-ink-muted" />

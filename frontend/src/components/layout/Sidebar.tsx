@@ -7,8 +7,8 @@ import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/cn'
 
 const NAV_ITEMS = [
-  { to: '/tasks', label: 'Mes taches', icon: SquareCheck },
-  { to: '/settings', label: 'Parametres', icon: Settings },
+  { to: '/tasks', label: 'Mes tâches', icon: SquareCheck },
+  { to: '/settings', label: 'Paramètres', icon: Settings },
 ]
 
 export function Sidebar() {
@@ -62,8 +62,8 @@ export function Sidebar() {
           type="button"
           onClick={() => setConfirmLogout(true)}
           className="rounded-control p-1.5 text-ink-disabled transition-colors hover:bg-recessed hover:text-danger"
-          aria-label="Se deconnecter"
-          title="Se deconnecter"
+          aria-label="Se déconnecter"
+          title="Se déconnecter"
         >
           <LogOut className="size-[18px]" />
         </button>
@@ -72,9 +72,9 @@ export function Sidebar() {
 
     <ConfirmDialog
       open={confirmLogout}
-      title="Deconnexion"
-      description="Voulez-vous vous deconnecter ?"
-      confirmLabel="Se deconnecter"
+      title="Déconnexion"
+      description="Voulez-vous vous déconnecter ?"
+      confirmLabel="Se déconnecter"
       icon={
         <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-recessed">
           <LogOut className="size-[18px] text-ink-muted" />

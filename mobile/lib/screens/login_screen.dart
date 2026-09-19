@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text('Bon retour', style: Theme.of(context).textTheme.headlineLarge),
                     const SizedBox(height: AppSpacing.sm),
                     const Text(
-                      'Connectez-vous pour retrouver vos taches.',
+                      'Connectez-vous pour retrouver vos tâches.',
                       style: TextStyle(color: AppColors.inkMuted, fontSize: 14),
                     ),
                     const SizedBox(height: AppSpacing.xl),
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       builder: (_) => RegisterScreen(auth: widget.auth),
                                     ),
                                   ),
-                          child: const Text('Creer un compte'),
+                          child: const Text('Créer un compte'),
                         ),
                       ],
                     ),

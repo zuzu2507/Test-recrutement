@@ -4,7 +4,7 @@ export function formatRelative(iso: string): string {
   const diffMs = Date.now() - date.getTime()
   const minutes = Math.floor(diffMs / 60_000)
 
-  if (minutes < 1) return "a l'instant"
+  if (minutes < 1) return "à l'instant"
   if (minutes < 60) return `il y a ${minutes} min`
 
   const hours = Math.floor(minutes / 60)

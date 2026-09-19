@@ -23,7 +23,7 @@ const PAGE_SIZE = 10
 /** Libelle du statut suivant, pour l'intitule accessible de la case a cocher. */
 function nextLabel(status: Task['status']): string {
   const upcoming = nextStatus(status)
-  return upcoming ? STATUS_META[upcoming].label : 'aucune etape suivante'
+  return upcoming ? STATUS_META[upcoming].label : 'aucune étape suivante'
 }
 
 const headerClass =
@@ -116,10 +116,10 @@ export function TaskTable({
           <thead>
             <tr className="border-b border-border-hairline bg-recessed/60">
               <th scope="col" className="w-12 py-2.5 pl-4" />
-              <th scope="col" className={headerClass}>Tache et description</th>
+              <th scope="col" className={headerClass}>Tâche et description</th>
               <th scope="col" className={cn(headerClass, 'w-[140px]')}>Statut</th>
-              <th scope="col" className={cn(headerClass, 'w-[130px]')}>Creee le</th>
-              <th scope="col" className={cn(headerClass, 'w-[130px]')}>Modifiee</th>
+              <th scope="col" className={cn(headerClass, 'w-[130px]')}>Créée le</th>
+              <th scope="col" className={cn(headerClass, 'w-[130px]')}>Modifiée</th>
               <th scope="col" className={cn(headerClass, 'w-[100px] pr-4 text-right')}>Actions</th>
             </tr>
           </thead>
@@ -148,7 +148,7 @@ export function TaskTable({
                       onChange={() => onAdvance(task)}
                       label={
                         done
-                          ? `${task.title} est terminee`
+                          ? `${task.title} est terminée`
                           : `Faire avancer ${task.title} vers ${nextLabel(task.status)}`
                       }
                     />
@@ -230,7 +230,7 @@ export function TaskTable({
           <p className="text-[13px] text-ink-muted">
             Affichage de <span className="font-semibold text-ink">{firstIndex}</span> a{' '}
             <span className="font-semibold text-ink">{lastIndex}</span> sur{' '}
-            <span className="font-semibold text-ink">{tasks.length}</span> taches
+            <span className="font-semibold text-ink">{tasks.length}</span> tâches
           </p>
 
           <div className="flex items-center gap-1">
@@ -241,7 +241,7 @@ export function TaskTable({
               className={pagerClass}
             >
               <ChevronLeft className="size-4" />
-              Precedent
+              Précédent
             </button>
 
             {Array.from({ length: pageCount }, (_, index) => index + 1).map((number) => (

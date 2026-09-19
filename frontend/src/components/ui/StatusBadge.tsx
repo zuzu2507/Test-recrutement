@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn'
 /** Libelles et couleurs de statut, centralises pour rester coherents partout. */
 export const STATUS_META: Record<TaskStatus, { label: string; badge: string; accent: string }> = {
   TODO: {
-    label: 'A faire',
+    label: 'À faire',
     badge: 'bg-todo-bg text-todo-fg border-todo-br',
     accent: 'bg-todo-fg',
   },

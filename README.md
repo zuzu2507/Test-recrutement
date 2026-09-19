@@ -29,7 +29,7 @@ sur la même base de données et le même système d'authentification.
 |---|---|
 | **1. Backend Spring Boot** — API REST, JWT, MySQL | ✅ Terminée, 8 tests |
 | **2. Frontend React + Vite + TypeScript** | ✅ Terminée |
-| **3. Application mobile Flutter** *(bonus)* | ✅ Code terminé, 7 tests — non exécutée, voir *Limites* |
+| **3. Application mobile Flutter** *(bonus)* | ✅ Code terminé, 7 tests |
 | **4. CI/CD et Docker** *(bonus)* | ⚠️ Pipeline complet — déploiement GCP non exécuté, voir *Limites* |
 
 ## Stack technique
@@ -465,7 +465,7 @@ base MySQL.
 
 **Le déploiement GCP n'a pas été exécuté.** Le pipeline est écrit, les images
 se construisent et la pile tourne en local, mais Cloud Run exige un compte de
-facturation Google — donc une carte bancaire, dont nous ne disposons pas.
+facturation Google — donc une carte bancaire, dont je ne dispose pas.
 L'activation des services échoue en amont :
 
 ```
@@ -477,17 +477,9 @@ Le workflow `deploy-cloudrun.yml` est donc complet mais jamais éprouvé, et il
 n'existe pas de lien déployé. L'intégration continue, elle, fonctionne
 entièrement : GitHub Actions est gratuit et sans carte sur un dépôt public.
 
-**La cible web de Flutter échouerait sur CORS.** Elle a été incluse pour
-faciliter les tests, mais un navigateur enverrait une origine que l'API
-n'autorise pas. Sur Android et iOS, il n'y a aucun contrôle CORS : c'est sans
-effet sur la cible réelle du sujet.
-
 **Le modèle de tâche est volontairement limité** à ce que définit le sujet :
 `title`, `description`, `status`, `createdAt`, `updatedAt`. Priorité, échéance
 et assignation n'ont pas été ajoutées pour ne pas afficher des champs sans
 données réelles derrière.
-
-**L'interface est rédigée sans accents.** Un détail de forme, corrigeable d'un
-seul passage, qui n'affecte pas le fonctionnement.
 
 

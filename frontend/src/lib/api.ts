@@ -54,12 +54,12 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     })
   } catch {
     // Echec reseau : l'API est injoignable, on ne recoit meme pas de statut.
-    throw new ApiError("Impossible de joindre le serveur. Verifiez qu'il est demarre.", 0)
+    throw new ApiError("Impossible de joindre le serveur. Vérifiez qu'il est démarré.", 0)
   }
 
   if (response.status === 401) {
     onUnauthorized()
-    throw new ApiError('Session expiree, veuillez vous reconnecter.', 401)
+    throw new ApiError('Session expirée, veuillez vous reconnecter.', 401)
   }
 
   if (!response.ok) {

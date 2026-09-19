@@ -45,7 +45,7 @@ class TaskDetailSheet extends StatelessWidget {
           const SizedBox(height: AppSpacing.xl),
 
           Text(
-            'TACHE #${task.id}',
+            'TÂCHE #${task.id}',
             style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -78,8 +78,8 @@ class TaskDetailSheet extends StatelessWidget {
 
           const _SectionTitle('Informations'),
           const SizedBox(height: AppSpacing.sm),
-          _InfoRow(label: 'Creee le', value: _formatDate(task.createdAt)),
-          _InfoRow(label: 'Derniere modification', value: _formatDate(task.updatedAt)),
+          _InfoRow(label: 'Créée le', value: _formatDate(task.createdAt)),
+          _InfoRow(label: 'Dernière modification', value: _formatDate(task.updatedAt)),
           const SizedBox(height: AppSpacing.xl),
 
           const _SectionTitle('Progression'),
@@ -175,7 +175,7 @@ class TaskDetailSheet extends StatelessWidget {
                   SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
-                      'Tache terminee. Le statut ne peut plus etre modifie.',
+                      'Tâche terminée. Le statut ne peut plus être modifié.',
                       style: TextStyle(fontSize: 12, color: AppColors.doneFg),
                     ),
                   ),

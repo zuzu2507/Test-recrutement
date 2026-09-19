@@ -54,11 +54,11 @@ export function TaskFormModal({
     <Modal
       open={open}
       onClose={onClose}
-      title={task ? 'Modifier la tache' : 'Nouvelle tache'}
+      title={task ? 'Modifier la tâche' : 'Nouvelle tâche'}
       description={
         task
-          ? 'Mettez a jour le titre, la description ou le statut.'
-          : 'Renseignez les informations de votre nouvelle tache.'
+          ? 'Mettez à jour le titre, la description ou le statut.'
+          : 'Renseignez les informations de votre nouvelle tâche.'
       }
       footer={
         <>
@@ -73,14 +73,14 @@ export function TaskFormModal({
             disabled={title.trim().length === 0}
           >
             {!submitting && <Check className="size-4" />}
-            {task ? 'Enregistrer' : 'Creer la tache'}
+            {task ? 'Enregistrer' : 'Créer la tâche'}
           </Button>
         </>
       }
     >
       <form id="task-form" onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
         <Input
-          label="Titre de la tache"
+          label="Titre de la tâche"
           hint={`${title.length} / ${TITLE_MAX}`}
           required
           maxLength={TITLE_MAX}
@@ -94,7 +94,7 @@ export function TaskFormModal({
         <Textarea
           label="Description"
           hint="Optionnelle"
-          placeholder="Precisez le contexte, les etapes ou les criteres de reussite..."
+          placeholder="Précisez le contexte, les étapes ou les critères de réussite..."
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           error={fieldErrors.description}
@@ -116,7 +116,7 @@ export function TaskFormModal({
                   onClick={() => setStatus(value)}
                   disabled={!allowed}
                   aria-pressed={active}
-                  title={allowed ? undefined : 'Le statut ne peut pas revenir en arriere'}
+                  title={allowed ? undefined : 'Le statut ne peut pas revenir en arrière'}
                   className={cn(
                     'flex items-center justify-center gap-2 rounded-control border px-3 py-2.5',
                     'text-[13px] font-semibold transition-all duration-150',

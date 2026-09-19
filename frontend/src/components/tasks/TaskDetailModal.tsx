@@ -60,13 +60,13 @@ export function TaskDetailModal({
       <div
         role="dialog"
         aria-modal="true"
-        aria-label={`Details de la tache ${task.title}`}
+        aria-label={`Détails de la tâche ${task.title}`}
         className="relative z-10 flex max-h-[88vh] w-full max-w-[920px] flex-col overflow-hidden rounded-card border border-border-hairline bg-surface shadow-level4"
       >
         <header className="flex items-start gap-4 border-b border-border-hairline px-6 py-5">
           <div className="min-w-0 flex-1">
             <p className="text-[11px] font-semibold uppercase tracking-[0.03em] text-ink-muted">
-              Tache #{task.id}
+              Tâche #{task.id}
             </p>
             <h2 className="mt-1.5 font-display text-[24px] font-bold leading-8 tracking-[-0.015em] text-ink">
               {task.title}
@@ -93,7 +93,7 @@ export function TaskDetailModal({
                 {task.description ? (
                   <p className="whitespace-pre-wrap text-sm leading-6 text-ink">{task.description}</p>
                 ) : (
-                  <p className="text-sm italic text-ink-disabled">Aucune description renseignee.</p>
+                  <p className="text-sm italic text-ink-disabled">Aucune description renseignée.</p>
                 )}
               </Card>
 
@@ -102,12 +102,12 @@ export function TaskDetailModal({
                   <Row icon={<Hash className="size-3.5" />} label="Identifiant" value={`#${task.id}`} />
                   <Row
                     icon={<CalendarPlus className="size-3.5" />}
-                    label="Creee le"
+                    label="Créée le"
                     value={formatDate(task.createdAt)}
                   />
                   <Row
                     icon={<Clock className="size-3.5" />}
-                    label="Derniere modification"
+                    label="Dernière modification"
                     value={formatRelative(task.updatedAt)}
                   />
                 </dl>
@@ -129,7 +129,7 @@ export function TaskDetailModal({
                         type="button"
                         disabled={!available || busy}
                         onClick={() => onChangeStatus(task, step)}
-                        title={available || current ? undefined : 'Etape deja franchie'}
+                        title={available || current ? undefined : 'Étape déjà franchie'}
                         className={cn(
                           'flex w-full items-center gap-2.5 rounded-control border px-3 py-2.5 text-left',
                           'text-[13px] font-semibold transition-colors',
@@ -163,15 +163,15 @@ export function TaskDetailModal({
               {final ? (
                 <p className="mt-3 flex items-start gap-2 rounded-control bg-done-bg px-3 py-2 text-[12px] leading-5 text-done-fg">
                   <Check className="mt-0.5 size-3.5 shrink-0" />
-                  Tache terminee. Le statut ne peut plus etre modifie.
+                  Tâche terminée. Le statut ne peut plus être modifié.
                 </p>
               ) : (
                 <p className="mt-3 text-[12px] leading-5 text-ink-muted">
-                  Prochaine etape :{' '}
+                  Prochaine étape :{' '}
                   <span className="font-semibold text-ink">
                     {upcoming && STATUS_META[upcoming].label}
                   </span>
-                  . Une etape franchie ne peut pas etre reprise.
+                  . Une étape franchie ne peut pas être reprise.
                 </p>
               )}
             </Card>

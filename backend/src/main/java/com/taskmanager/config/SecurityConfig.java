@@ -61,7 +61,7 @@ public class SecurityConfig {
             objectMapper.writeValue(response.getOutputStream(), ApiError.of(
                     HttpStatus.UNAUTHORIZED.value(),
                     "Unauthorized",
-                    "Authentification requise : token absent, invalide ou expire",
+                    "Authentification requise : token absent, invalide ou expiré",
                     request.getRequestURI()));
         };
     }

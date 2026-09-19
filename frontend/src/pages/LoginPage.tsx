@@ -42,16 +42,12 @@ export function LoginPage() {
 
   return (
     <AuthLayout>
-      <span className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.03em] text-accent">
-        <span className="size-1.5 rounded-full bg-accent" />
-        Connexion securisee
-      </span>
-
+      
       <h1 className="mt-4 font-display text-[32px] font-bold leading-10 tracking-[-0.02em] text-ink">
         Bon retour
       </h1>
       <p className="mt-1.5 text-sm text-ink-muted">
-        Connectez-vous pour retrouver votre espace de travail et vos taches.
+        Connectez-vous pour retrouver votre espace de travail et vos tâches.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4" noValidate>
@@ -88,7 +84,7 @@ export function LoginPage() {
       <p className="mt-6 text-center text-sm text-ink-muted">
         Pas encore de compte ?{' '}
         <Link to="/register" className="font-semibold text-accent hover:underline">
-          Creer un compte
+          Créer un compte
         </Link>
       </p>
     </AuthLayout>

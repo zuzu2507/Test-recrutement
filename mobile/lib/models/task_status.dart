@@ -1,7 +1,7 @@
 /// Cycle de vie d'une tache, miroir de l'enum TaskStatus du backend.
 /// La progression est a sens unique : TODO -> IN_PROGRESS -> DONE.
 enum TaskStatus {
-  todo('TODO', 'A faire', 0),
+  todo('TODO', 'À faire', 0),
   inProgress('IN_PROGRESS', 'En cours', 1),
   done('DONE', 'Termine', 2);
 

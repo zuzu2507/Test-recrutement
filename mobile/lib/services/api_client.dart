@@ -55,7 +55,7 @@ class ApiClient {
       throw ApiException(
         error.type == DioExceptionType.connectionTimeout ||
                 error.type == DioExceptionType.receiveTimeout
-            ? "Le serveur ne repond pas. Verifiez qu'il est demarre."
+            ? "Le serveur ne répond pas. Vérifiez qu'il est démarré."
             : "Impossible de joindre le serveur (${ApiConfig.baseUrl}).",
         0,
       );
@@ -65,7 +65,7 @@ class ApiClient {
 
     if (status == 401) {
       onUnauthorized?.call();
-      throw ApiException('Session expiree, veuillez vous reconnecter.', 401);
+      throw ApiException('Session expirée, veuillez vous reconnecter.', 401);
     }
 
     if (status >= 200 && status < 300) return response.data;

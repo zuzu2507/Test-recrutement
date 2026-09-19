@@ -138,9 +138,9 @@ class _TasksScreenState extends State<TasksScreen> {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.card)),
-        title: const Text('Supprimer la tache'),
+        title: const Text('Supprimer la tâche'),
         content: Text(
-          'Voulez-vous vraiment supprimer « ${task.title} » ? Cette action est irreversible.',
+          'Voulez-vous vraiment supprimer « ${task.title} » ? Cette action est irréversible.',
           style: const TextStyle(fontSize: 14, color: AppColors.inkMuted, height: 1.5),
         ),
         actions: [
@@ -171,9 +171,9 @@ class _TasksScreenState extends State<TasksScreen> {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.card)),
-        title: const Text('Deconnexion'),
+        title: const Text('Déconnexion'),
         content: const Text(
-          'Voulez-vous vous deconnecter ?',
+          'Voulez-vous vous déconnecter ?',
           style: TextStyle(fontSize: 14, color: AppColors.inkMuted, height: 1.5),
         ),
         actions: [
@@ -183,7 +183,7 @@ class _TasksScreenState extends State<TasksScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Se deconnecter'),
+            child: const Text('Se déconnecter'),
           ),
         ],
       ),
@@ -201,7 +201,7 @@ class _TasksScreenState extends State<TasksScreen> {
         title: const BrandLogo(),
         actions: [
           IconButton(
-            tooltip: 'Se deconnecter',
+            tooltip: 'Se déconnecter',
             icon: const Icon(Icons.logout, size: 20, color: AppColors.inkMuted),
             onPressed: _confirmLogout,
           ),
@@ -213,7 +213,7 @@ class _TasksScreenState extends State<TasksScreen> {
         backgroundColor: AppColors.accent,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
-        label: const Text('Nouvelle tache'),
+        label: const Text('Nouvelle tâche'),
       ),
       body: SafeArea(
         child: Column(
@@ -223,11 +223,11 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Mes taches', style: Theme.of(context).textTheme.headlineLarge),
+                  Text('Mes tâches', style: Theme.of(context).textTheme.headlineLarge),
                   if (user != null) ...[
                     const SizedBox(height: 2),
                     Text(
-                      'Connecte en tant que ${user.name}',
+                      'Connecté en tant que ${user.name}',
                       style: const TextStyle(fontSize: 13, color: AppColors.inkMuted),
                     ),
                   ],
@@ -237,7 +237,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     controller: _searchController,
                     onChanged: _onSearchChanged,
                     decoration: InputDecoration(
-                      hintText: 'Rechercher une tache...',
+                      hintText: 'Rechercher une tâche...',
                       fillColor: AppColors.recessed,
                       prefixIcon: const Icon(Icons.search, size: 18, color: AppColors.inkDisabled),
                       suffixIcon: _searchController.text.isEmpty
@@ -294,7 +294,7 @@ class _TasksScreenState extends State<TasksScreen> {
         icon: Icons.cloud_off_outlined,
         title: 'Serveur injoignable',
         message: _tasks.error!,
-        actionLabel: 'Reessayer',
+        actionLabel: 'Réessayer',
         onAction: _tasks.refresh,
       );
     }
@@ -303,11 +303,11 @@ class _TasksScreenState extends State<TasksScreen> {
       final filtered = _tasks.statusFilter != null || _tasks.search.trim().isNotEmpty;
       return _EmptyState(
         icon: filtered ? Icons.search_off : Icons.checklist_rounded,
-        title: filtered ? 'Aucun resultat' : 'Aucune tache pour le moment',
+        title: filtered ? 'Aucun résultat' : 'Aucune tâche pour le moment',
         message: filtered
-            ? 'Aucune tache ne correspond a votre recherche ou au filtre selectionne.'
-            : 'Creez votre premiere tache pour commencer a organiser votre journee.',
-        actionLabel: filtered ? 'Reinitialiser' : 'Creer une tache',
+            ? 'Aucune tâche ne correspond à votre recherche ou au filtre sélectionné.'
+            : 'Créez votre première tâche pour commencer à organiser votre journée.',
+        actionLabel: filtered ? 'Réinitialiser' : 'Créer une tâche',
         onAction: () {
           if (filtered) {
             _searchController.clear();

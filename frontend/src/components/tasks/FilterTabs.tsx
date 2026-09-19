@@ -11,9 +11,9 @@ interface FilterTabsProps {
 
 const TABS: Array<{ key: StatusFilter; label: string }> = [
   { key: 'ALL', label: 'Toutes' },
-  { key: 'TODO', label: 'A faire' },
+  { key: 'TODO', label: 'À faire' },
   { key: 'IN_PROGRESS', label: 'En cours' },
-  { key: 'DONE', label: 'Terminees' },
+  { key: 'DONE', label: 'Terminées' },
 ]
 
 export function FilterTabs({ value, onChange, tasks }: FilterTabsProps) {

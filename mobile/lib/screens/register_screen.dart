@@ -74,10 +74,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('Creer votre compte', style: Theme.of(context).textTheme.headlineLarge),
+                    Text('Créer votre compte', style: Theme.of(context).textTheme.headlineLarge),
                     const SizedBox(height: AppSpacing.sm),
                     const Text(
-                      'Commencez a organiser vos taches en quelques secondes.',
+                      'Commencez à organiser vos tâches en quelques secondes.',
                       style: TextStyle(color: AppColors.inkMuted, fontSize: 14),
                     ),
                     const SizedBox(height: AppSpacing.xl),
@@ -126,13 +126,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: true,
                       textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
-                        hintText: '$_minPasswordLength caracteres minimum',
+                        hintText: '$_minPasswordLength caractères minimum',
                         prefixIcon: Icon(Icons.lock_outline, size: 18, color: AppColors.inkDisabled),
                       ),
                       validator: (value) {
                         if (_fieldErrors['password'] != null) return _fieldErrors['password'];
                         if (value == null || value.length < _minPasswordLength) {
-                          return 'Au moins $_minPasswordLength caracteres';
+                          return 'Au moins $_minPasswordLength caractères';
                         }
                         return null;
                       },
@@ -147,7 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _submit(),
                       decoration: const InputDecoration(
-                        hintText: 'Repetez le mot de passe',
+                        hintText: 'Répétez le mot de passe',
                         prefixIcon: Icon(Icons.lock_outline, size: 18, color: AppColors.inkDisabled),
                       ),
                       // Verification locale : l'API ne connait pas ce champ.
@@ -164,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 18,
                               child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                             )
-                          : const Text('Creer le compte'),
+                          : const Text('Créer le compte'),
                     ),
                   ],
                 ),

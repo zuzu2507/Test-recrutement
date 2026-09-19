@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(ApiError.of(
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
-                "Donnees invalides",
+                "Données invalides",
                 request.getRequestURI(),
                 fieldErrors));
     }
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(ApiError.of(
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
-                "Valeur invalide pour le parametre " + ex.getName(),
+                "Valeur invalide pour le paramètre " + ex.getName(),
                 request.getRequestURI()));
     }
 

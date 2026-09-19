@@ -18,7 +18,7 @@ export function DeleteTaskDialog({ task, submitting, onClose, onConfirm }: Delet
       open={task !== null}
       onClose={onClose}
       size="md"
-      title="Supprimer la tache"
+      title="Supprimer la tâche"
       icon={
         <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-danger-bg">
           <Trash2 className="size-[18px] text-danger" />
@@ -31,7 +31,7 @@ export function DeleteTaskDialog({ task, submitting, onClose, onConfirm }: Delet
           </Button>
           <Button variant="destructive" size="compact" loading={submitting} onClick={onConfirm}>
             {!submitting && <Trash2 className="size-4" />}
-            Supprimer definitivement
+            Supprimer définitivement
           </Button>
         </>
       }
@@ -39,14 +39,14 @@ export function DeleteTaskDialog({ task, submitting, onClose, onConfirm }: Delet
       <p className="text-sm leading-6 text-ink-muted">
         Voulez-vous vraiment supprimer{' '}
         <span className="font-semibold text-ink">&laquo;&nbsp;{task?.title}&nbsp;&raquo;</span> ?
-        Cette action est irreversible.
+        Cette action est irréversible.
       </p>
 
       {task && (
         <div className="mt-4 rounded-control border border-border-hairline bg-recessed px-3.5 py-3">
           <div className="flex items-center justify-between gap-3">
             <span className="rounded-full bg-surface px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.03em] text-ink-muted">
-              Tache #{task.id}
+              Tâche #{task.id}
             </span>
             <StatusBadge status={task.status} />
           </div>
@@ -54,15 +54,15 @@ export function DeleteTaskDialog({ task, submitting, onClose, onConfirm }: Delet
             <p className="mt-2.5 line-clamp-2 text-[13px] text-ink-muted">{task.description}</p>
           )}
           <p className="mt-2.5 text-[12px] text-ink-disabled">
-            Creee le {formatDate(task.createdAt)}
+            Créée le {formatDate(task.createdAt)}
           </p>
         </div>
       )}
 
       <p className="mt-4 flex items-start gap-2 rounded-control bg-accent-soft px-3 py-2.5 text-[12px] leading-5 text-ink-muted">
         <Info className="mt-0.5 size-3.5 shrink-0 text-accent" />
-        La suppression est immediate et se propage aux autres appareils connectes
-        au meme compte.
+        La suppression est immédiate et se propage aux autres appareils connectés
+        au même compte.
       </p>
     </Modal>
   )

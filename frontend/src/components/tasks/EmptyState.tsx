@@ -16,13 +16,13 @@ export function EmptyState({ filtered, onCreate, onReset }: EmptyStateProps) {
           <SearchX className="size-6 text-ink-disabled" />
         </span>
         <h3 className="mt-5 font-display text-[20px] font-semibold tracking-[-0.01em] text-ink">
-          Aucun resultat
+          Aucun résultat
         </h3>
         <p className="mt-1.5 max-w-sm text-sm text-ink-muted">
-          Aucune tache ne correspond a votre recherche ou au filtre selectionne.
+          Aucune tâche ne correspond à votre recherche ou au filtre sélectionné.
         </p>
         <Button variant="secondary" size="compact" onClick={onReset} className="mt-5">
-          Reinitialiser les filtres
+          Réinitialiser les filtres
         </Button>
       </div>
     )
@@ -40,16 +40,16 @@ export function EmptyState({ filtered, onCreate, onReset }: EmptyStateProps) {
       </div>
 
       <h3 className="mt-6 font-display text-[22px] font-semibold tracking-[-0.015em] text-ink">
-        Aucune tache pour le moment
+        Aucune tâche pour le moment
       </h3>
       <p className="mt-2 max-w-md text-sm leading-6 text-ink-muted">
-        Creez votre premiere tache pour commencer a organiser votre journee.
-        Elle sera immediatement synchronisee avec le mobile.
+        Créez votre première tâche pour commencer à organiser votre journée.
+        Elle sera immédiatement synchronisée avec le mobile.
       </p>
 
       <Button onClick={onCreate} className="mt-6">
         <Plus className="size-4" />
-        Creer ma premiere tache
+        Créer ma première tâche
       </Button>
     </div>
   )

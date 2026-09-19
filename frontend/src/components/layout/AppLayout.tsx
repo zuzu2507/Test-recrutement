@@ -21,8 +21,8 @@ export function AppLayout({ children, search, onSearchChange }: AppLayoutProps) 
               type="search"
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Rechercher une tache par titre ou description..."
-              aria-label="Rechercher une tache"
+              placeholder="Rechercher une tâche par titre ou description..."
+              aria-label="Rechercher une tâche"
               className="h-10 w-full rounded-control border border-border-hairline bg-recessed pl-10 pr-3 text-sm text-ink placeholder:text-ink-disabled transition-colors focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent/15"
             />
           </div>

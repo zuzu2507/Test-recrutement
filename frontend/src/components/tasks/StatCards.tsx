@@ -18,9 +18,9 @@ export function StatCards({ tasks }: StatCardsProps) {
 
   const cards = [
     {
-      label: 'Total des taches',
+      label: 'Total des tâches',
       value: total,
-      caption: total === 0 ? 'Aucune tache enregistree' : `${todo} en attente de demarrage`,
+      caption: total === 0 ? 'Aucune tâche enregistrée' : `${todo} en attente de démarrage`,
       icon: ListChecks,
       tone: 'text-accent bg-accent-soft',
     },
@@ -32,9 +32,9 @@ export function StatCards({ tasks }: StatCardsProps) {
       tone: 'text-progress-fg bg-progress-bg',
     },
     {
-      label: 'Terminees',
+      label: 'Terminées',
       value: done,
-      caption: total === 0 ? 'En attente de donnees' : `${completion}% de l'ensemble`,
+      caption: total === 0 ? 'En attente de données' : `${completion}% de l'ensemble`,
       icon: CircleCheck,
       tone: 'text-done-fg bg-done-bg',
     },
