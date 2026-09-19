@@ -1,0 +1,32 @@
+# Jenkins local, pour executer le Jenkinsfile sans serveur dedie.
+#
+#   docker compose -f docker-compose.jenkins.yml up -d
+#   puis http://localhost:8090
+#
+# Le mot de passe initial s'affiche avec :
+#   docker exec taskmanager-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+#
+# Volontairement separe de docker-compose.yml : Jenkins est un outil
+# d'integration, pas un composant de l'application.
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk21
+    container_name: taskmanager-jenkins
+    restart: unless-stopped
+    user: root
+    environment:
+      JAVA_OPTS: -Djenkins.install.runSetupWizard=true
+    ports:
+      - "8090:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      # Le pipeline lance ses etapes dans des conteneurs : Jenkins doit
+      # pouvoir piloter le Docker de la machine hote.
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Le depot est monte en lecture seule, pour pointer le Jenkinsfile
+      # local sans passer par un clone.
+      - ./:/workspace:ro
+
+volumes:
+  jenkins-data:

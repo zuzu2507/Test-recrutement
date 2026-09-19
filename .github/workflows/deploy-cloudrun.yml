@@ -1,0 +1,113 @@
+# Deploiement sur Google Cloud Run.
+#
+# Ce workflow n'est PAS automatique : il ne se declenche qu'a la demande,
+# depuis l'onglet Actions du depot. La raison est documentee dans le README —
+# Cloud Run exige un compte de facturation, donc une carte bancaire, ce dont
+# nous ne disposons pas. Le pipeline est ecrit et pret ; il n'a jamais ete
+# execute et ne doit pas etre presente comme tel.
+#
+# Secrets attendus dans Settings > Secrets and variables > Actions :
+#   GCP_PROJECT_ID              identifiant du projet
+#   GCP_REGION                  ex. europe-west1
+#   GCP_SA_KEY                  cle JSON du compte de service
+#   CLOUD_SQL_CONNECTION_NAME   projet:region:instance
+#   DB_PASSWORD                 mot de passe de l'utilisateur taskuser
+#   JWT_SECRET                  32 caracteres minimum
+name: Deploiement Cloud Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Taper 'deployer' pour confirmer"
+        required: true
+        default: ''
+
+env:
+  REPOSITORY: taskflow
+  BACKEND_SERVICE: taskflow-backend
+  FRONTEND_SERVICE: taskflow-frontend
+
+jobs:
+  deploy:
+    name: Construire et deployer
+    runs-on: ubuntu-latest
+    # Garde-fou : un declenchement accidentel ne deploie rien.
+    if: github.event.inputs.confirmation == 'deployer'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authentification Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Installer gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Autoriser Docker aupres d'Artifact Registry
+        run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+
+      - name: Definir le prefixe des images
+        id: img
+        run: |
+          echo "prefix=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${REPOSITORY}" >> "$GITHUB_OUTPUT"
+          echo "tag=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Construire et publier les images
+        run: |
+          for module in backend frontend; do
+            image="${{ steps.img.outputs.prefix }}/$module:${{ steps.img.outputs.tag }}"
+            docker build -t "$image" "./$module"
+            docker push "$image"
+          done
+
+      # Le backend joint Cloud SQL par socket Unix, pas par le reseau :
+      # aucune adresse IP publique n'est exposee sur la base.
+      - name: Deployer le backend
+        id: backend
+        run: |
+          gcloud run deploy "$BACKEND_SERVICE" \
+            --image "${{ steps.img.outputs.prefix }}/backend:${{ steps.img.outputs.tag }}" \
+            --region "${{ secrets.GCP_REGION }}" \
+            --platform managed \
+            --allow-unauthenticated \
+            --add-cloudsql-instances "${{ secrets.CLOUD_SQL_CONNECTION_NAME }}" \
+            --set-env-vars "SPRING_PROFILES_ACTIVE=,DB_NAME=taskmanager,DB_USERNAME=taskuser" \
+            --set-env-vars "DB_HOST=/cloudsql/${{ secrets.CLOUD_SQL_CONNECTION_NAME }}" \
+            --set-env-vars "JWT_SECRET=${{ secrets.JWT_SECRET }}" \
+            --set-env-vars "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" \
+            --min-instances 0 --max-instances 3 --memory 512Mi
+
+          url=$(gcloud run services describe "$BACKEND_SERVICE" \
+                 --region "${{ secrets.GCP_REGION }}" --format 'value(status.url)')
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      # Nginx relaie /api vers le backend : le navigateur ne voit qu'une
+      # origine, donc aucune configuration CORS a maintenir en production.
+      - name: Deployer le frontend
+        id: frontend
+        run: |
+          gcloud run deploy "$FRONTEND_SERVICE" \
+            --image "${{ steps.img.outputs.prefix }}/frontend:${{ steps.img.outputs.tag }}" \
+            --region "${{ secrets.GCP_REGION }}" \
+            --platform managed \
+            --allow-unauthenticated \
+            --set-env-vars "API_URL=${{ steps.backend.outputs.url }}" \
+            --min-instances 0 --max-instances 3 --memory 256Mi
+
+          url=$(gcloud run services describe "$FRONTEND_SERVICE" \
+                 --region "${{ secrets.GCP_REGION }}" --format 'value(status.url)')
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Recapitulatif
+        run: |
+          {
+            echo "### Deploiement termine"
+            echo ""
+            echo "| Service | URL |"
+            echo "|---|---|"
+            echo "| Interface web | ${{ steps.frontend.outputs.url }} |"
+            echo "| API | ${{ steps.backend.outputs.url }} |"
+          } >> "$GITHUB_STEP_SUMMARY"

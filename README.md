@@ -30,7 +30,7 @@ sur la même base de données et le même système d'authentification.
 | **1. Backend Spring Boot** — API REST, JWT, MySQL | ✅ Terminée, 8 tests |
 | **2. Frontend React + Vite + TypeScript** | ✅ Terminée |
 | **3. Application mobile Flutter** *(bonus)* | ✅ Code terminé, 7 tests — non exécutée, voir *Limites* |
-| **4. CI/CD et déploiement GCP** *(bonus)* | ❌ Non réalisée |
+| **4. CI/CD et Docker** *(bonus)* | ⚠️ Pipeline complet — déploiement GCP non exécuté, voir *Limites* |
 
 ## Stack technique
 
@@ -47,10 +47,14 @@ sur la même base de données et le même système d'authentification.
 
 ```
 .
-├── backend/     API REST Spring Boot
-├── frontend/    Interface web React
-├── mobile/      Application Flutter
-└── docs/        Captures d'écran
+├── backend/              API REST Spring Boot + Dockerfile
+├── frontend/             Interface web React + Dockerfile et Nginx
+├── mobile/               Application Flutter
+├── docs/                 Captures d'écran
+├── .github/workflows/    Pipelines GitHub Actions
+├── Jenkinsfile           Pipeline Jenkins équivalent
+├── docker-compose.yml    Pile complète en local
+└── docker-compose.jenkins.yml
 ```
 
 ---
@@ -315,6 +319,93 @@ partagent ainsi la même identité.
 
 ---
 
+## Intégration et déploiement
+
+### Pile complète en conteneurs
+
+Une seule commande construit et démarre les trois services :
+
+```bash
+docker compose up -d --build
+```
+
+| Service | Adresse |
+|---|---|
+| Interface web | http://localhost:3000 |
+| API | http://localhost:8080 |
+| MySQL | port 3307 |
+
+Pour développer avec un IDE tout en gardant la base conteneurisée :
+
+```bash
+docker compose up -d mysql
+```
+
+### Ce que font les images
+
+**Backend** — construction en deux étapes : Maven compile le jar, puis seule une
+image JRE Alpine part en production. Ni Maven ni le JDK ne sont embarqués, et le
+conteneur tourne sous un utilisateur non privilégié.
+
+**Frontend** — Vite produit les fichiers statiques, Nginx les sert. Nginx relaie
+aussi `/api` vers le backend, ce qui place l'interface et l'API **sous la même
+origine** : aucun préflight CORS en production, exactement comme le proxy de
+développement de Vite. L'en-tête `Origin` est effacé au passage, puisque l'appel
+devient serveur-à-serveur.
+
+Les deux images lisent le port dans la variable `PORT`, comme l'exigent Cloud Run
+et la plupart des plateformes d'hébergement.
+
+### Pipeline GitHub Actions
+
+`.github/workflows/ci.yml` s'exécute à chaque push et chaque pull request :
+
+| Étape | Contenu |
+|---|---|
+| **Backend** | `mvn verify` — les 8 tests tournent sur H2, aucune base à démarrer |
+| **Frontend** | `npm ci`, analyse statique, `tsc` strict puis bundle |
+| **Mobile** | `flutter analyze` et `flutter test` |
+| **Images** | Construction des images backend et frontend |
+
+Les trois vérifications sont parallèles. Les images ne sont construites que si
+elles passent, et ne sont **publiées** que sur un push — une pull request vérifie
+que l'image se bâtit sans rien publier. Elles partent vers GitHub Container
+Registry, gratuit et sans configuration de compte externe.
+
+### Pipeline Jenkins
+
+Le sujet cite Jenkins comme alternative : `Jenkinsfile` en fournit l'équivalent.
+Chaque étape s'exécute dans un conteneur dédié, si bien que l'agent Jenkins n'a
+besoin ni de JDK, ni de Node, ni de Flutter — seulement de Docker.
+
+Pour l'exécuter sans serveur dédié :
+
+```bash
+docker compose -f docker-compose.jenkins.yml up -d
+# puis http://localhost:8090
+docker exec taskmanager-jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
+
+### Déploiement Cloud Run
+
+`.github/workflows/deploy-cloudrun.yml` construit les images, les pousse vers
+Artifact Registry et déploie les deux services sur Cloud Run. Le backend joint
+Cloud SQL par socket Unix, sans exposer d'adresse IP publique sur la base.
+
+Le workflow se déclenche **à la demande** depuis l'onglet Actions, avec une
+confirmation à saisir pour éviter tout départ accidentel.
+
+Il attend six secrets : `GCP_PROJECT_ID`, `GCP_REGION`, `GCP_SA_KEY`,
+`CLOUD_SQL_CONNECTION_NAME`, `DB_PASSWORD` et `JWT_SECRET`.
+
+> **Ce workflow n'a jamais été exécuté.** Cloud Run exige un compte de
+> facturation Google, donc une carte bancaire, dont nous ne disposons pas.
+> `gcloud services enable` échoue en amont avec `UREQ_PROJECT_BILLING_NOT_FOUND`.
+> Le pipeline est écrit et complet, mais il serait malhonnête de le présenter
+> comme éprouvé.
+
+---
+
 ## Tests
 
 ```bash
@@ -372,9 +463,19 @@ machine de développement, pas de code. Le cycle connexion / liste / CRUD n'a do
 pas été observé à l'écran sur mobile. Il l'a été sur le web, contre une vraie
 base MySQL.
 
-**L'étape 4 n'est pas faite.** Pas de pipeline CI/CD ni de déploiement GCP.
-Le `docker-compose.yml` existe et les tests tournent sans base externe, ce qui
-constitue les prérequis, mais le pipeline reste à écrire.
+**Le déploiement GCP n'a pas été exécuté.** Le pipeline est écrit, les images
+se construisent et la pile tourne en local, mais Cloud Run exige un compte de
+facturation Google — donc une carte bancaire, dont nous ne disposons pas.
+L'activation des services échoue en amont :
+
+```
+ERROR: (gcloud.services.enable) FAILED_PRECONDITION:
+Billing account for project '...' is not found.
+```
+
+Le workflow `deploy-cloudrun.yml` est donc complet mais jamais éprouvé, et il
+n'existe pas de lien déployé. L'intégration continue, elle, fonctionne
+entièrement : GitHub Actions est gratuit et sans carte sur un dépôt public.
 
 **La cible web de Flutter échouerait sur CORS.** Elle a été incluse pour
 faciliter les tests, mais un navigateur enverrait une origine que l'API
