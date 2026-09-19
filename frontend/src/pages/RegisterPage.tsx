@@ -72,10 +72,10 @@ export function RegisterPage() {
   return (
     <AuthLayout>
       <h1 className="font-display text-[32px] font-bold leading-10 tracking-[-0.02em] text-ink">
-        Creer votre compte
+        Créer votre compte
       </h1>
       <p className="mt-1.5 text-sm text-ink-muted">
-        Commencez a organiser vos projets et vos taches personnelles.
+        Commencez à organiser vos projets et vos tâches personnelles.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4" noValidate>
@@ -106,7 +106,7 @@ export function RegisterPage() {
         <div>
           <Input
             label="Mot de passe"
-            hint={`${MIN_PASSWORD_LENGTH} caracteres minimum`}
+            hint={`${MIN_PASSWORD_LENGTH} caractères minimum`}
             type="password"
             autoComplete="new-password"
             required
@@ -133,20 +133,20 @@ export function RegisterPage() {
           autoComplete="new-password"
           required
           icon={<Lock className="size-4" />}
-          placeholder="Repetez le mot de passe"
+          placeholder="Répétez le mot de passe"
           value={confirm}
           onChange={(event) => setConfirm(event.target.value)}
           error={fieldErrors.confirm}
         />
 
         <Button type="submit" loading={submitting} className="mt-2 w-full">
-          Creer le compte
+          Créer le compte
           {!submitting && <ArrowRight className="size-4" />}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-ink-muted">
-        Vous avez deja un compte ?{' '}
+        Vous avez déjà un compte ?{' '}
         <Link to="/login" className="font-semibold text-accent hover:underline">
           Se connecter
         </Link>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { KeyRound, LogOut, Mail, ShieldCheck, User as UserIcon } from 'lucide-react'
+import { KeyRound, LogOut, Mail, User as UserIcon } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { useAuth } from '@/hooks/useAuth'
@@ -22,7 +22,7 @@ export function SettingsPage() {
           Compte
         </p>
         <h1 className="mt-1.5 font-display text-[32px] font-bold leading-10 tracking-[-0.02em] text-ink">
-          Parametres
+          Paramètres
         </h1>
         <p className="mt-1 text-sm text-ink-muted">
           Informations de votre compte et gestion de la session.
@@ -46,34 +46,21 @@ export function SettingsPage() {
         </dl>
       </section>
 
-      <section className="rounded-card border border-border-hairline bg-surface p-5 shadow-level1">
-        <h2 className="text-[13px] font-semibold text-ink">Securite</h2>
-        <p className="mt-2 flex items-start gap-2 text-[13px] leading-6 text-ink-muted">
-          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-done-fg" />
-          Votre mot de passe est stocke sous forme de hash BCrypt et n'est jamais
-          conservé en clair. Votre session repose sur un jeton JWT valable 24 heures,
-          conserve dans le navigateur et renvoye a chaque appel de l'API.
-        </p>
-      </section>
-
       <section className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-border-hairline bg-surface p-5 shadow-level1">
         <div>
-          <h2 className="text-[13px] font-semibold text-ink">Deconnexion</h2>
-          <p className="mt-1 text-[13px] text-ink-muted">
-            Le jeton sera efface de ce navigateur.
-          </p>
+          <h2 className="text-[13px] font-semibold text-ink">Déconnexion</h2>
         </div>
         <Button variant="secondary" size="compact" onClick={() => setConfirmLogout(true)}>
           <LogOut className="size-4" />
-          Se deconnecter
+          Se déconnecter
         </Button>
       </section>
 
       <ConfirmDialog
         open={confirmLogout}
-        title="Deconnexion"
-        description="Voulez-vous vous deconnecter ?"
-        confirmLabel="Se deconnecter"
+        title="Déconnexion"
+        description="Voulez-vous vous déconnecter ?"
+        confirmLabel="Se déconnecter"
         icon={
           <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-recessed">
             <LogOut className="size-[18px] text-ink-muted" />

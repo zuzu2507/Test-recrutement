@@ -84,7 +84,7 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
               const SizedBox(height: AppSpacing.xl),
 
               Text(
-                editing ? 'Modifier la tache' : 'Nouvelle tache',
+                editing ? 'Modifier la tâche' : 'Nouvelle tâche',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: AppSpacing.xl),
@@ -96,7 +96,7 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                 maxLength: _titleMax,
                 autofocus: !editing,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(hintText: 'Ex. Preparer la reunion'),
+                decoration: const InputDecoration(hintText: 'Ex. Préparer la réunion'),
                 validator: (value) =>
                     (value == null || value.trim().isEmpty) ? 'Le titre est obligatoire' : null,
               ),
@@ -152,7 +152,7 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
 
               ElevatedButton(
                 onPressed: _submit,
-                child: Text(editing ? 'Enregistrer' : 'Creer la tache'),
+                child: Text(editing ? 'Enregistrer' : 'Créer la tâche'),
               ),
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton(

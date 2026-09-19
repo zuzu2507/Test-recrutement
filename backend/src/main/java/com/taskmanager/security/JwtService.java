@@ -23,7 +23,7 @@ public class JwtService {
         byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         if (keyBytes.length < 32) {
             throw new IllegalStateException(
-                    "app.jwt.secret doit faire au moins 32 caracteres (256 bits) pour HS256");
+                    "app.jwt.secret doit faire au moins 32 caractères (256 bits) pour HS256");
         }
         this.key = Keys.hmacShaKeyFor(keyBytes);
         this.expirationMs = expirationMs;

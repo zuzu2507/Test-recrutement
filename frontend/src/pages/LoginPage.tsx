@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { ArrowRight, Lock, Mail, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Lock, Mail } from 'lucide-react'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -42,16 +42,12 @@ export function LoginPage() {
 
   return (
     <AuthLayout>
-      <span className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.03em] text-accent">
-        <span className="size-1.5 rounded-full bg-accent" />
-        Connexion securisee
-      </span>
-
+      
       <h1 className="mt-4 font-display text-[32px] font-bold leading-10 tracking-[-0.02em] text-ink">
         Bon retour
       </h1>
       <p className="mt-1.5 text-sm text-ink-muted">
-        Connectez-vous pour retrouver votre espace de travail et vos taches.
+        Connectez-vous pour retrouver votre espace de travail et vos tâches.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4" noValidate>
@@ -85,15 +81,10 @@ export function LoginPage() {
         </Button>
       </form>
 
-      <p className="mt-6 flex items-center justify-center gap-1.5 rounded-control bg-recessed px-3 py-2.5 text-[12px] text-ink-muted">
-        <ShieldCheck className="size-3.5" />
-        Mots de passe haches en BCrypt, session par jeton JWT
-      </p>
-
       <p className="mt-6 text-center text-sm text-ink-muted">
         Pas encore de compte ?{' '}
         <Link to="/register" className="font-semibold text-accent hover:underline">
-          Creer un compte
+          Créer un compte
         </Link>
       </p>
     </AuthLayout>

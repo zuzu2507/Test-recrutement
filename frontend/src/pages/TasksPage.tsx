@@ -97,10 +97,10 @@ export function TasksPage({ search, onResetSearch }: TasksPageProps) {
             Espace de travail
           </p>
           <h1 className="mt-1.5 font-display text-[32px] font-bold leading-10 tracking-[-0.02em] text-ink">
-            Mes taches
+            Mes tâches
           </h1>
           <p className="mt-1 text-sm text-ink-muted">
-            Gerez et suivez vos priorites quotidiennes.
+            Gérez et suivez vos priorités quotidiennes.
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export function TasksPage({ search, onResetSearch }: TasksPageProps) {
           </Button>
           <Button onClick={openCreate}>
             <Plus className="size-4" />
-            Nouvelle tache
+            Nouvelle tâche
           </Button>
         </div>
       </header>
@@ -124,7 +124,7 @@ export function TasksPage({ search, onResetSearch }: TasksPageProps) {
         {loading && tasks.length === 0 ? (
           <div className="flex items-center justify-center gap-2.5 py-20 text-sm text-ink-muted">
             <Loader2 className="size-4 animate-spin text-accent" />
-            Chargement des taches...
+            Chargement des tâches...
           </div>
         ) : tasks.length === 0 ? (
           <EmptyState

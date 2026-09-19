@@ -48,7 +48,7 @@ export function useTasks(filters: Filters) {
     async (payload: TaskPayload) => {
       const created = await api.createTask(payload)
       await refresh()
-      notify(`Tache "${created.title}" creee.`, 'success')
+      notify(`Tache "${created.title}" créée.`, 'success')
     },
     [refresh, notify],
   )
@@ -57,7 +57,7 @@ export function useTasks(filters: Filters) {
     async (id: number, payload: TaskPayload) => {
       const updated = await api.updateTask(id, payload)
       await refresh()
-      notify(`Tache "${updated.title}" mise a jour.`, 'success')
+      notify(`Tache "${updated.title}" mise à jour.`, 'success')
     },
     [refresh, notify],
   )
@@ -68,7 +68,7 @@ export function useTasks(filters: Filters) {
       try {
         await api.deleteTask(task.id)
         await refresh()
-        notify(`Tache "${task.title}" supprimee.`, 'success')
+        notify(`Tache "${task.title}" supprimée.`, 'success')
       } finally {
         setBusyId(null)
       }

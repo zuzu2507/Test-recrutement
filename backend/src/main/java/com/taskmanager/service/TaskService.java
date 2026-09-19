@@ -82,6 +82,6 @@ public class TaskService {
      */
     private Task requireOwnedTask(Long userId, Long taskId) {
         return taskRepository.findByIdAndUserId(taskId, userId)
-                .orElseThrow(() -> new NotFoundException("Tache introuvable : " + taskId));
+                .orElseThrow(() -> new NotFoundException("Tâche introuvable : " + taskId));
     }
 }
