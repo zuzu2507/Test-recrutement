@@ -111,19 +111,53 @@ Créez un compte depuis l'écran d'inscription, et vous êtes connecté.
 
 ### 4. Lancer l'application mobile
 
+**L'émulateur est le chemin recommandé**, et de loin le plus simple :
+
 ```bash
 cd mobile
 flutter pub get
 flutter run
 ```
 
-Un émulateur Android ne voit pas le `localhost` de la machine hôte : l'application
-bascule seule sur `http://10.0.2.2:8080`, qui en est l'alias. Pour un téléphone
-physique sur le même réseau Wi-Fi :
+Aucun paramètre n'est nécessaire. Un émulateur Android ne voit pas le
+`localhost` de la machine hôte, mais l'application le sait : elle bascule seule
+sur `http://10.0.2.2:8080`, l'alias que l'émulateur réserve à son hôte.
+
+> **Pourquoi l'émulateur plutôt qu'un téléphone ?** Faute de déploiement — voir
+> *Limites connues* — il n'existe pas de backend accessible depuis Internet.
+> L'application ne peut donc joindre que l'API lancée sur votre propre machine,
+> ce que l'émulateur fait sans configuration.
+
+#### Sur un téléphone physique
+
+C'est possible, mais il y a trois conditions, et l'APK obtenu ne fonctionnera
+que sur ce réseau précis.
+
+**1.** Le téléphone et l'ordinateur doivent être sur le même réseau — Wi-Fi
+commun ou partage de connexion.
+
+**2.** Le pare-feu doit laisser passer le port 8080. Sous Windows, dans un
+PowerShell **administrateur** :
+
+```powershell
+New-NetFirewallRule -DisplayName "TaskFlow API 8080" -Direction Inbound `
+  -Protocol TCP -LocalPort 8080 -Action Allow -Profile Private
+```
+
+**3.** L'application doit être compilée avec l'adresse réseau de la machine,
+`10.0.2.2` n'ayant aucun sens en dehors de l'émulateur :
 
 ```bash
+# Relever l'adresse : ipconfig sous Windows, ip addr sous Linux
 flutter run --dart-define=API_BASE_URL=http://192.168.1.20:8080
+
+# Ou pour produire un APK installable
+flutter build apk --release --dart-define=API_BASE_URL=http://192.168.1.20:8080
 ```
+
+Cette adresse est figée dans le binaire : changer de réseau la rend caduque.
+Un APK compilé ainsi est un outil de démonstration locale, pas un livrable
+distribuable.
 
 ### Consulter la base de données
 
@@ -476,6 +510,13 @@ Billing account for project '...' is not found.
 Le workflow `deploy-cloudrun.yml` est donc complet mais jamais éprouvé, et il
 n'existe pas de lien déployé. L'intégration continue, elle, fonctionne
 entièrement : GitHub Actions est gratuit et sans carte sur un dépôt public.
+
+**Conséquence pour l'application mobile** : sans API accessible depuis
+Internet, elle ne peut joindre que le backend lancé en local. **Elle se teste
+donc dans l'émulateur Android**, qui atteint la machine hôte sans configuration.
+Un APK installé sur un téléphone exigerait le même réseau, une règle de
+pare-feu et une recompilation avec l'adresse locale figée dedans — voir
+*Démarrage*.
 
 **Le modèle de tâche est volontairement limité** à ce que définit le sujet :
 `title`, `description`, `status`, `createdAt`, `updatedAt`. Priorité, échéance
